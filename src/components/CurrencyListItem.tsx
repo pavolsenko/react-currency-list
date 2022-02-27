@@ -1,71 +1,96 @@
 import * as React from 'react';
+import {
+    getAllCountriesByCurrencyOrSymbol,
+    getAllISOByCurrencyOrSymbol,
+} from 'iso-country-currency';
 
 import {
     Box,
     Card,
-    CardContent, CardMedia,
-    Typography,
+    CardContent,
+    styled,
 } from '@mui/material';
 
 import {ICurrency} from '../interfaces/currency';
-import {getAllISOByCurrencyOrSymbol} from 'iso-country-currency';
+import {ExchangeRateValue} from './ExchangeRateValue';
+import {CountryFlags} from './CountryFlags';
+
+const CardWrapper = styled(Card)(({theme}) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+}));
+
+const CurrencySymbol = styled(CardContent)(({theme}) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white,
+    width: 100,
+    fontSize: '1.8rem',
+
+    [theme.breakpoints.up('md')]: {
+        fontSize: '2.8rem',
+        width: 150,
+    },
+}));
+
+const CurrencyName = styled(Box)(({theme}) => ({
+    fontSize: '1.5rem',
+
+    [theme.breakpoints.up('md')]: {
+        fontSize: '2.1rem',
+    },
+}));
 
 interface ICurrencyListItemProps {
     currency: ICurrency;
+    baseCurrency: string;
 }
 
 export const CurrencyListItem: React.FC<ICurrencyListItemProps> = (props: ICurrencyListItemProps) => {
-    let countryCodes: string[] = [];
-    try {
-        countryCodes = getAllISOByCurrencyOrSymbol('currency', props.currency.currency);
-    } catch(error) {
+    const [countryCodes, setCountryCodes] = React.useState<string[]>([]);
+    const [countries, setCountries] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+        try {
+            setCountryCodes(getAllISOByCurrencyOrSymbol('currency', props.currency.currency));
+            setCountries(getAllCountriesByCurrencyOrSymbol('currency', props.currency.currency));
+        } catch(error) {
+        }
+    }, [props.currency.currency]);
+
+    if (!countryCodes || countryCodes.length === 0) {
+        return null;
     }
 
-    const renderCountryFlag = (): React.ReactNode => {
-        return countryCodes.map((countryCode: string) => (
-            <img
-                src={process.env.PUBLIC_URL + '/flags/' + countryCode.toLowerCase() + '.png'}
-                key={countryCode}
-                alt={countryCode}
-            />
-        ));
-    };
-
     return (
-        <Card sx={{display: 'flex', justifyContent: 'space-between', margin: 5}}>
+        <CardWrapper>
             <Box sx={{display: 'flex'}}>
-                <CardMedia sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 2, backgroundColor: 'grey'}}>
-                    <Typography variant='h2'>
-                        {props.currency.currency}
-                    </Typography>
-                </CardMedia>
+                <CurrencySymbol>
+                    {props.currency.currency}
+                </CurrencySymbol>
 
                 <CardContent>
-                    <Box>
-                        {renderCountryFlag()}
-                    </Box>
+                    <CountryFlags
+                        countryCodes={countryCodes}
+                        countries={countries}
+                    />
 
-                    <Box>
-                        <Typography variant='h5'>
-                            {props.currency.nameI18N}
-                        </Typography>
-                    </Box>
+                    <CurrencyName>
+                        {props.currency.nameI18N || props.currency.currency}
+                    </CurrencyName>
                 </CardContent>
             </Box>
 
-            <CardContent sx={{display: 'flex'}}>
-                <Box>
-                    {props.currency.exchangeRate.buy}
-                </Box>
-
-                <Box>
-                    {props.currency.exchangeRate.middle}
-                </Box>
-
-                <Box>
-                    {props.currency.exchangeRate.sell}
-                </Box>
-            </CardContent>
-        </Card>
+            <ExchangeRateValue
+                value={props.currency.exchangeRate.middle}
+                currency={props.currency.currency}
+                precision={props.currency.precision}
+                baseCurrency={props.baseCurrency}
+            />
+        </CardWrapper>
     );
 };

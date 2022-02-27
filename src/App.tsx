@@ -2,11 +2,13 @@ import React from 'react';
 import {IntlProvider} from 'react-intl';
 import {BrowserRouter} from 'react-router-dom';
 
-import {ThemeProvider} from '@mui/material';
+import {CssBaseline, ThemeProvider} from '@mui/material';
 
 import {useLocale} from './hooks/useLocale';
 import {themeConfig} from './config/themeConfig';
-import { Main } from './components/Main';
+import {Main} from './components/Main';
+
+import 'typeface-roboto';
 
 export const App: React.FC = () => {
     const {
@@ -25,6 +27,7 @@ export const App: React.FC = () => {
         >
             <ThemeProvider theme={themeConfig}>
                 <BrowserRouter>
+                    <CssBaseline/>
                     <Main
                         locale={locale}
                         availableLocales={availableLocales}

@@ -3,56 +3,75 @@ import {FormattedMessage} from 'react-intl';
 
 import {
     Alert,
-    CircularProgress,
+    Container,
+    styled,
 } from '@mui/material';
 
 import {ICurrency} from '../interfaces/currency';
 import {CurrencyListItem} from './CurrencyListItem';
+import {SearchBar} from './SearchBar';
+import {useCurrencies} from '../hooks/useCurrencies';
+import {Loading} from './Loading';
 
 interface ICurrencyListProps {
     locale: string;
-    currencies: ICurrency[];
-    isError: boolean;
-    isLoading: boolean;
 }
 
+const AlertWrapper = styled(Alert)(({theme}) => ({
+    marginTop: theme.spacing(2),
+}));
+
 export const CurrencyList: React.FC<ICurrencyListProps> = (props: ICurrencyListProps) => {
-    if (props.isError) {
-        return (
-            <Alert severity='error'>
-                <FormattedMessage id={'Sorry, something went wrong'}/>
-            </Alert>
-        );
-    }
+    const {
+        currencies,
+        baseCurrency,
+        isError,
+        isLoading,
+        searchInputValue,
+        onSearchInputValueChange,
+    } = useCurrencies(props.locale);
 
-    if (props.isLoading) {
-        return (
-            <CircularProgress />
-        );
-    }
+    const renderInfo = (): React.ReactNode => {
+        if (isError) {
+            return (
+                <AlertWrapper severity='error'>
+                    <FormattedMessage id={'Sorry, something went wrong'}/>
+                </AlertWrapper>
+            );
+        }
 
-    if (!props.currencies) {
-        return (
-            <Alert severity='info'>
-                <FormattedMessage id={'No results'}/>
-            </Alert>
-        );
-    }
+        if (isLoading) {
+            return (
+                <Loading/>
+            );
+        }
+
+        if (!currencies || currencies.length === 0) {
+            return (
+                <AlertWrapper severity='warning'>
+                    <FormattedMessage id={'No results'}/>
+                </AlertWrapper>
+            );
+        }
+    };
 
     return (
         <>
-            {props.currencies.map((currency: ICurrency): React.ReactNode => {
-                if (!currency.exchangeRate) {
-                    return null;
-                }
+            <SearchBar
+                searchInputValue={searchInputValue}
+                onSearchInputValueChange={onSearchInputValueChange}
+            />
 
-                return (
+            <Container maxWidth={false}>
+                {currencies.map((currency: ICurrency): React.ReactNode => (
                     <CurrencyListItem
                         currency={currency}
+                        baseCurrency={baseCurrency}
                         key={currency.currency}
                     />
-                );
-            })}
+                ))}
+                {renderInfo()}
+            </Container>
         </>
     );
 };

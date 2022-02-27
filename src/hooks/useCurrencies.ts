@@ -7,6 +7,7 @@ import {ICurrency} from '../interfaces/currency';
 export const useCurrencies = (locale: string) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const [baseCurrency, setBaseCurrency] = React.useState<string>('');
     const [currencies, setCurrencies] = React.useState<ICurrency[]>([]);
     const [isError, setIsError] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -38,15 +39,20 @@ export const useCurrencies = (locale: string) => {
                 return;
             }
 
-            setCurrencies(
-                response.data.fx.sort((a: ICurrency, b: ICurrency) => (a.currency > b.currency) ? 1 : -1)
-            );
+            let currencies = response.data.fx;
+            setBaseCurrency(response.data.baseCurrency);
 
+            currencies = currencies.filter((currency: ICurrency) => {
+                return currency.exchangeRate;
+            });
+            currencies = currencies.sort((a: ICurrency, b: ICurrency) => (a.currency > b.currency) ? 1 : -1)
+
+            setCurrencies(currencies);
             setIsLoading(false);
         }
 
         fetchData();
-    }, [locale]);
+    }, [locale, baseCurrency]);
 
     const onSearchInputValueChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
         const value = event.target.value;
@@ -75,6 +81,7 @@ export const useCurrencies = (locale: string) => {
 
     return {
         currencies: filterCurrencies(),
+        baseCurrency,
         isError,
         isLoading,
         searchInputValue,
