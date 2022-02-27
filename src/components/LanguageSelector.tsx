@@ -7,6 +7,7 @@ import {
     MenuItem,
     Typography,
 } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import {ILocale} from '../config/localeConfig';
 
@@ -39,6 +40,7 @@ export const LanguageSelector: React.FC<ILanguageSelectorProps> = (props: ILangu
                 color={'inherit'}
             >
                 {props.locale.toUpperCase()}
+                <ArrowDropDownIcon/>
             </Button>
 
             <Menu
