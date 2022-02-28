@@ -10,30 +10,17 @@ jest.mock("react-router-dom", () => ({
     useSearchParams: jest.fn(),
 }));
 
-describe('useCurrencies', () => {
+describe("useCurrencies", () => {
     afterEach(() => {
         mockAxios.reset();
     });
 
-    it('should return empty currencies array', () => {
-        jest.spyOn(Router, 'useSearchParams').mockReturnValue([new URLSearchParams(), () => {}]);
+    it("should return empty currencies array", () => {
+        jest.spyOn(Router, "useSearchParams").mockReturnValue([new URLSearchParams(), () => {}]);
 
         mockAxios.get.mockResolvedValueOnce(axiosResponses.emptyCurrenciesResponse);
 
         const {result} = renderHook(useCurrencies);
-        expect(result.current.currencies).toBe([]);
+        expect(result.current.currencies).toEqual([]);
     });
-
-    // it('should return array of 3 currencies', () => {
-    //     jest.spyOn(Router, 'useSearchParams').mockReturnValue([new URLSearchParams(), () => {}]);
-    //
-    //     mockAxios.get.mockResolvedValueOnce(axiosResponses.validCurrenciesResponse);
-    //
-    //     let result: any;
-    //     act(() => {
-    //         result = renderHook(useCurrencies);
-    //     });
-    //
-    //     expect(result?.current?.currencies?.length).toBe(3);
-    // });
 });
