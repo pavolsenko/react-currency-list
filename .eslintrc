@@ -10,6 +10,14 @@
         "maximum": 1,
         "when": "always"
       }
+    ],
+    "indent": [
+      "error",
+      4
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
     ]
   },
   "plugins": [

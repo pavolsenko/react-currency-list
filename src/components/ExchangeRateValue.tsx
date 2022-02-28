@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Box, CardContent, styled, Typography} from "@mui/material";
+import { Box, CardContent, styled, Typography } from "@mui/material";
 
-const ExchangeRateValueWrapper = styled(CardContent)(({theme}) => ({
+const ExchangeRateValueWrapper = styled(CardContent)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -9,7 +9,7 @@ const ExchangeRateValueWrapper = styled(CardContent)(({theme}) => ({
     width: 120,
 }));
 
-const BaseCurrency = styled(Box)(({theme}) => ({
+const BaseCurrency = styled(Box)(({ theme }) => ({
     fontSize: "0.75rem",
     textAlign: "center",
     color: theme.palette.grey["500"],
@@ -32,8 +32,10 @@ export const ExchangeRateValue: React.FC<IExchangeRateProps> = (
     return (
         <ExchangeRateValueWrapper>
             <Box>
-                <Typography variant={"h5"}
-component={"div"}>
+                <Typography
+                    variant={"h5"}
+                    component={"div"}
+                >
                     <BaseCurrency>
                         1&nbsp;{props.baseCurrency}&nbsp;/&nbsp;{props.currency}
                     </BaseCurrency>

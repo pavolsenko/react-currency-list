@@ -31,8 +31,10 @@ export const LanguageSelector: React.FC<ILanguageSelectorProps> = (
 
     return (
         <Box sx={{flexGrow: 0}}>
-            <Button onClick={onClick}
-color={"inherit"}>
+            <Button
+                onClick={onClick}
+                color={"inherit"}
+            >
                 {props.locale.toUpperCase()}
                 <ArrowDropDownIcon />
             </Button>

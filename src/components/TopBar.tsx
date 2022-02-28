@@ -23,14 +23,18 @@ export const TopBar: React.FC<ITopBarProps> = (props: ITopBarProps) => {
     const trigger = useScrollTrigger();
 
     return (
-        <Slide appear={false}
-direction="down"
-in={!trigger}>
+        <Slide
+            appear={false}
+            direction="down"
+            in={!trigger}
+        >
             <AppBar elevation={0}>
                 <Toolbar>
-                    <Typography variant="h6"
-noWrap
-component="div">
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="div"
+                    >
                         <FormattedMessage id={"George FE Test"} />
                     </Typography>
 
