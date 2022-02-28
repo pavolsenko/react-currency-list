@@ -11,9 +11,7 @@ export const useCurrencies = (locale: string) => {
     const [currencies, setCurrencies] = React.useState<ICurrency[]>([]);
     const [isError, setIsError] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
-    const [searchInputValue, setSearchInputValue] = React.useState<string>(
-        searchParams.get("search") || "",
-    );
+    const [searchInputValue, setSearchInputValue] = React.useState<string>(searchParams.get("search") || "");
 
     React.useEffect(() => {
         const fetchData = async () => {
