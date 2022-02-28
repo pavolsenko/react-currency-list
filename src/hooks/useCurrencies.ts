@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useSearchParams} from "react-router-dom";
-import axios from "axios";
+import axios, {AxiosResponse} from 'axios';
 
 import {ICurrency} from "../interfaces/currency";
 
@@ -18,42 +18,37 @@ export const useCurrencies = (locale: string) => {
             const endpoint = process.env.REACT_APP_CURRENCIES_ENDPOINT;
 
             if (!endpoint) {
-                setIsError(true);
-                return;
+                throw new Error();
             }
 
             setIsLoading(true);
 
-            let response;
-            try {
-                response = await axios.get(endpoint, {params: {locale}});
-            } catch (error: unknown) {
-                setIsLoading(false);
-                setIsError(true);
-                return;
-            }
-
-            if (!response?.data || response.status !== 200) {
-                setIsLoading(false);
-                setIsError(true);
-                return;
-            }
-
-            let currencies = response.data.fx;
-            setBaseCurrency(response.data.baseCurrency);
-
-            currencies = currencies.filter((currency: ICurrency) => {
-                return currency.exchangeRate;
-            });
-            currencies = currencies.sort((a: ICurrency, b: ICurrency) =>
-                a.currency > b.currency ? 1 : -1,
-            );
-
-            setCurrencies(currencies);
-            setIsLoading(false);
+            return await axios.get(endpoint, {params: {locale}});
         };
 
-        fetchData();
+        fetchData()
+            .catch(() => {
+                setIsLoading(false);
+                setIsError(true);
+            })
+            .then((response: AxiosResponse | void) => {
+                if (!response?.data || response.status !== 200) {
+                    throw new Error();
+                }
+
+                let currencies = response.data.fx;
+                setBaseCurrency(response.data.baseCurrency);
+
+                currencies = currencies.filter((currency: ICurrency) => {
+                    return currency.exchangeRate;
+                });
+                currencies = currencies.sort((a: ICurrency, b: ICurrency) =>
+                    a.currency > b.currency ? 1 : -1,
+                );
+
+                setCurrencies(currencies);
+                setIsLoading(false);
+            });
     }, [locale, baseCurrency]);
 
     const onSearchInputValueChange = (

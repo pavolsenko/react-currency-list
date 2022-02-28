@@ -16,6 +16,10 @@ const FlagWrapper = styled(Box)(() => ({
     height: 24,
 }));
 
+const BoxWrapper = styled(Box)(() => ({
+    display: 'flex',
+}));
+
 const CountryWrapper = styled(Box)(({theme}) => ({
     backgroundColor: theme.palette.grey["600"],
     color: theme.palette.common.white,
@@ -86,7 +90,7 @@ export const CountryFlags: React.FC<ICountryFlagsProps> = (
     };
 
     return (
-        <Box sx={{display: "flex"}}>
+        <BoxWrapper>
             {props.countryCodes.map(
                 (countryCode: string, index: number): React.ReactNode => {
                     if (index > getMaxFlagsCount() - 1) {
@@ -121,6 +125,6 @@ export const CountryFlags: React.FC<ICountryFlagsProps> = (
                 },
             )}
             {renderMoreText()}
-        </Box>
+        </BoxWrapper>
     );
 };

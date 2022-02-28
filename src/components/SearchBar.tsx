@@ -35,6 +35,10 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     },
 }));
 
+const AppBarWrapper = styled(AppBar)(({theme}) => ({
+    marginTop: theme.spacing(7),
+}));
+
 interface ISearchBarProps {
     searchInputValue: string;
     onSearchInputValueChange: (
@@ -48,11 +52,10 @@ export const SearchBar: React.FC<ISearchBarProps> = (
     const intl = useIntl();
 
     return (
-        <AppBar
+        <AppBarWrapper
             color={"primary"}
             position={"sticky"}
             elevation={0}
-            sx={{marginTop: 7}}
         >
             <Toolbar>
                 <Search>
@@ -66,6 +69,6 @@ export const SearchBar: React.FC<ISearchBarProps> = (
                     />
                 </Search>
             </Toolbar>
-        </AppBar>
+        </AppBarWrapper>
     );
 };

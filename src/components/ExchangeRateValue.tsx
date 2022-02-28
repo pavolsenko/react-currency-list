@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Box, CardContent, styled, Typography } from "@mui/material";
+
+import {Box, CardContent, styled, Typography} from "@mui/material";
 
 const ExchangeRateValueWrapper = styled(CardContent)(({ theme }) => ({
     display: "flex",

@@ -17,6 +17,10 @@ const CardWrapper = styled(Card)(({theme}) => ({
     marginBottom: theme.spacing(2),
 }));
 
+const BoxWrapper = styled(Box)(() => ({
+    display: 'flex',
+}));
+
 const CurrencySymbol = styled(CardContent)(({theme}) => ({
     display: "flex",
     justifyContent: "center",
@@ -74,7 +78,7 @@ export const CurrencyListItem: React.FC<ICurrencyListItemProps> = (
 
     return (
         <CardWrapper>
-            <Box sx={{display: "flex"}}>
+            <BoxWrapper>
                 <CurrencySymbol>{props.currency.currency}</CurrencySymbol>
 
                 <CardContent>
@@ -87,7 +91,7 @@ export const CurrencyListItem: React.FC<ICurrencyListItemProps> = (
                         {props.currency.nameI18N || props.currency.currency}
                     </CurrencyName>
                 </CardContent>
-            </Box>
+            </BoxWrapper>
 
             <ExchangeRateValue
                 value={props.currency.exchangeRate.middle}

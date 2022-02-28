@@ -1,9 +1,13 @@
 import * as React from "react";
 
-import {Box, Button, Menu, MenuItem, Typography} from "@mui/material";
+import {Box, Button, Menu, MenuItem, styled, Typography} from '@mui/material';
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import {ILocale} from "../config/localeConfig";
+
+const BoxWrapper = styled(Box)(() => ({
+    flexGrow: 0,
+}));
 
 interface ILanguageSelectorProps {
     availableLocales: ILocale[];
@@ -30,7 +34,7 @@ export const LanguageSelector: React.FC<ILanguageSelectorProps> = (
     };
 
     return (
-        <Box sx={{flexGrow: 0}}>
+        <BoxWrapper>
             <Button
                 onClick={onClick}
                 color={"inherit"}
@@ -63,6 +67,6 @@ export const LanguageSelector: React.FC<ILanguageSelectorProps> = (
                     </MenuItem>
                 ))}
             </Menu>
-        </Box>
+        </BoxWrapper>
     );
 };
