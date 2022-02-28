@@ -22,7 +22,7 @@ const Value = styled(Box)(() => ({
 interface IExchangeRateProps {
     value: number;
     currency: string;
-    precision: number;
+    precision?: number;
     baseCurrency: string;
 }
 
@@ -37,7 +37,8 @@ export const ExchangeRateValue: React.FC<IExchangeRateProps> = (
                     component={"div"}
                 >
                     <BaseCurrency>
-                        1&nbsp;{props.baseCurrency}&nbsp;/&nbsp;{props.currency}
+                        1&nbsp;{props.baseCurrency}&nbsp;/&nbsp;
+                        <span>{props.currency}</span>
                     </BaseCurrency>
                     <Value>{props.value.toFixed(props.precision)}</Value>
                 </Typography>

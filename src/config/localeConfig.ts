@@ -7,8 +7,8 @@ export interface ILocale {
     value: string;
 }
 
-export const defaultLocale: string =
-    process.env.REACT_APP_DEFAULT_LOCALE || "en";
+export const defaultLocale: string = "en";
+
 export const availableLocales: ILocale[] = [
     {
         title: "English",

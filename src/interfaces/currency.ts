@@ -16,10 +16,10 @@ export interface ICurrencyBanknoteRate {
 
 export interface ICurrency {
     currency: string;
-    precision: number;
-    nameI18N: string;
+    precision?: number;
+    nameI18N?: string;
     exchangeRate: ICurrencyExchangeRate;
-    banknoteRate: ICurrencyBanknoteRate;
-    flags: string[];
+    banknoteRate?: ICurrencyBanknoteRate;
+    flags?: string[];
     denominations?: number[];
 }

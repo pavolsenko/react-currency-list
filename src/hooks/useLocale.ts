@@ -10,9 +10,7 @@ import {
 export const useLocale = () => {
     const [locale, setLocale] = React.useState<string>(defaultLocale);
 
-    const getMessages = ():
-        | Record<string, string>
-        | Record<string, MessageFormatElement[]> => {
+    const getMessages = (): Record<string, string> | Record<string, MessageFormatElement[]> => {
         return messages[locale];
     };
 

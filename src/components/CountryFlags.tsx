@@ -79,8 +79,8 @@ export const CountryFlags: React.FC<ICountryFlagsProps> = (
 
         return (
             <>
-                +{props.countries.length - getMaxFlagsCount()}{" "}
-                {intl.formatMessage({id: "more"})}
+                +{props.countries.length - getMaxFlagsCount()}&nbsp;
+                <span>{intl.formatMessage({id: "more"})}</span>
             </>
         );
     };

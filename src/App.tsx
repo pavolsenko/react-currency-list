@@ -11,8 +11,13 @@ import {Main} from "./components/Main";
 import "typeface-roboto";
 
 export const App: React.FC = () => {
-    const {locale, availableLocales, defaultLocale, setLocale, getMessages} =
-        useLocale();
+    const {
+        locale,
+        availableLocales,
+        defaultLocale,
+        setLocale,
+        getMessages,
+    } = useLocale();
 
     return (
         <IntlProvider

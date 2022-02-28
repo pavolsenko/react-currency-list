@@ -77,13 +77,9 @@ export const useCurrencies = (locale: string) => {
             return currencies;
         }
 
-        return currencies.filter((currency: ICurrency): boolean => {
-            const filterByCurrencyCode = currency.currency
-                ?.toLowerCase()
-                .includes(searchInputValue.toLowerCase());
-            const filterByCurrencyName = currency.nameI18N
-                ?.toLowerCase()
-                .includes(searchInputValue.toLowerCase());
+        return currencies.filter((currency: ICurrency): boolean | undefined => {
+            const filterByCurrencyCode = currency.currency?.toLowerCase().includes(searchInputValue.toLowerCase());
+            const filterByCurrencyName = currency.nameI18N?.toLowerCase().includes(searchInputValue.toLowerCase());
 
             return filterByCurrencyCode || filterByCurrencyName;
         });
