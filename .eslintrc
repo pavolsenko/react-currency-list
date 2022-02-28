@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "react-app",
+    "prettier"
+  ],
+  "rules": {
+    "react/jsx-max-props-per-line": [
+      2,
+      {
+        "maximum": 1,
+        "when": "always"
+      }
+    ]
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "ignorePatterns": [
+    "**/*.png",
+    "**/*.json"
+  ]
+}
