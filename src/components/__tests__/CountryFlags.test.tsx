@@ -1,18 +1,49 @@
 import {render, screen} from "@testing-library/react";
 
 import {CountryFlags} from "../CountryFlags";
-import {IntlProvider} from "react-intl";
+import {WrapperTestComponent} from "../../testUtils";
 
-it("Should display 3 country flags", async () => {
+it("should display 3 country flags", async () => {
     render(
-        <IntlProvider locale={"en"}>
+        <WrapperTestComponent>
             <CountryFlags
                 countryCodes={["AT", "DE", "CH"]}
                 countries={["Austria", "Germany", "Switzerland"]}
             />
-        </IntlProvider>,
+        </WrapperTestComponent>,
     );
 
     const images = await screen.findAllByRole("img");
     expect(images).toHaveLength(3);
+});
+
+it("should display 1 country flag", async () => {
+    render(
+        <WrapperTestComponent>
+            <CountryFlags
+                countryCodes={["AT"]}
+                countries={["Austria"]}
+            />
+        </WrapperTestComponent>,
+    );
+
+    const images = await screen.findAllByRole("img");
+    expect(images).toHaveLength(1);
+});
+
+it("should display 3 country flag + text 'more'", async () => {
+    render(
+        <WrapperTestComponent>
+            <CountryFlags
+                countryCodes={["AT", "DE", "CH", "SK", "HU"]}
+                countries={["Austria", "Germany", "Switzerland", "Slovakia", "Hungary"]}
+            />
+        </WrapperTestComponent>,
+    );
+
+    const images = await screen.findAllByRole("img");
+    expect(images).toHaveLength(3);
+
+    const textMore = await screen.findByText("more");
+    expect(textMore).toBeInTheDocument();
 });
