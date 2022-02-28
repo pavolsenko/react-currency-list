@@ -1,30 +1,30 @@
-import {createTheme, Theme} from '@mui/material';
+import {createTheme, Theme} from "@mui/material";
 
 export const themeConfig: Theme = createTheme({
     palette: {
         primary: {
-            main: '#1552a8',
+            main: "#1552a8",
         },
         secondary: {
-            main: '#1a67D2',
+            main: "#1a67D2",
         },
         error: {
-            main: '#e54825',
+            main: "#e54825",
         },
         warning: {
-            main: '#ffbe00',
+            main: "#ffbe00",
         },
         info: {
-            main: '#403d3a',
+            main: "#403d3a",
         },
         success: {
-            main: '#588f27',
+            main: "#588f27",
         },
         text: {
-            primary: '#403d3a',
+            primary: "#403d3a",
         },
         background: {
-            default: '#eeeeee',
+            default: "#eeeeee",
         },
     },
 });

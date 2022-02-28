@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 
-import {TopBar} from './TopBar';
-import {CurrencyList} from './CurrencyList';
-import {ILocale} from '../config/localeConfig';
+import {TopBar} from "./TopBar";
+import {CurrencyList} from "./CurrencyList";
+import {ILocale} from "../config/localeConfig";
 
 interface IMainProps {
     locale: string;
@@ -18,9 +18,7 @@ export const Main: React.FC<IMainProps> = (props: IMainProps) => {
                 availableLocales={props.availableLocales}
                 onLocaleChange={props.setLocale}
             />
-            <CurrencyList
-                locale={props.locale}
-            />
+            <CurrencyList locale={props.locale} />
         </>
     );
 };
